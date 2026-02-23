@@ -28,7 +28,11 @@ def home(request):
 
 
 def about(request):
-    return render(request, 'home/about.html')
+    return render(request, 'home/about.html', context={'page': 'about'})
+
+
+def contact(request):
+    return render(request, 'home/contact.html', context={'page': 'contact'})
 
 
 def shishir(request):
@@ -51,9 +55,9 @@ def shishir(request):
             'name': 'Ram',
             'age': 28,
             'city': 'Bhaktapur'
-        }
+        },
     ]
-    return render(request, 'home/index.html', )
+    return render(request, 'home/index.html', context = {'peoples': peoples})
 
 
 

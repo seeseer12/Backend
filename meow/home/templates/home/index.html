@@ -1,12 +1,182 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hey bro</title>
+{% extends 'home/base.html' %}
+{% block start %}
+its index page
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: white;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+    }
+
+    th {
+        background: #2563eb;
+        cursor: pointer;
+    }
+
+    tr:nth-child(even) {
+        background: #1e293b;
+    }
+
+    tr:nth-child(odd) {
+        background: #334155;
+    }
+
+    tr:hover {
+        background: #22c55e;
+        color: black;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        tr {
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        th {
+            display: none;
+        }
+
+        td {
+            text-align: right;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td::before {
+            position: absolute;
+            left: 10px;
+            width: 50%;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td:nth-child(1)::before { content: "Name"; }
+        td:nth-child(2)::before { content: "Age"; }
+        td:nth-child(3)::before { content: "City"; }
+        td:nth-child(4)::before { content: "Can Vote"; }
+    }
+</style>
 </head>
+
 <body>
-    This is a cool page!
- {{peoples}}
+
+<div class="container">
+    <h2>🔥 Cool Interactive Table</h2>
+
+    <input type="text" id="search" placeholder="Search name..." onkeyup="searchTable()">
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Name ⬍</th>
+                <th onclick="sortTable(1)">Age ⬍</th>
+                <th onclick="sortTable(2)">City ⬍</th>
+                <th>Can Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+          <a href=" home/contact">Contact Us</a>
+          <a href=" home/about">About Us</a>
+            <tr>
+                <td>Shishir</td>
+                <td>22</td>
+                <td>Pokhara</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+
+
+                <td>Sakuntala</td>
+                <td>17</td>
+                <td>Kathmandu</td>
+                <td>No</td>
+            </tr>
+            <tr>
+
+                <td>Alex</td>
+                <td>30</td>
+                <td>Delhi</td>
+                <td>Yes</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+function searchTable() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let rows = document.querySelectorAll("#myTable tbody tr");
+
+    rows.forEach(row => {
+        let name = row.cells[0].innerText.toLowerCase();
+        row.style.display = name.includes(input) ? "" : "none";
+    });
+}
+
+function sortTable(col) {
+    let table = document.getElementById("myTable");
+    let rows = Array.from(table.rows).slice(1);
+    let asc = table.classList.toggle("asc");
+
+    rows.sort((a, b) => {
+        let x = a.cells[col].innerText;
+        let y = b.cells[col].innerText;
+
+        return asc 
+            ? x.localeCompare(y, undefined, {numeric: true}) 
+            : y.localeCompare(x, undefined, {numeric: true});
+    });
+
+    rows.forEach(row => table.appendChild(row));
+}
+</script>
+
 </body>
 </html>
+
+{% endblock %}
